@@ -11,12 +11,16 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.effect.Reflection;
 import javafx.scene.layout.Region;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
+import gui.Friend;
+import gui.FriendsList;
+import javafx.scene.paint.Color;
 
 public class JavaFXClient extends Application {
     final Button bt = new Button("Post");
@@ -28,43 +32,51 @@ public class JavaFXClient extends Application {
     final ImageView[] pics = new ImageView[5];
     final VBox vb = new VBox();//champ
     final VBox vb2 = new VBox();
-    DropShadow shadow = new DropShadow();
+    final DropShadow shadow = new DropShadow();
  
     @Override
-    public void start(Stage stage) {
-        Region root = new Region();
-        Scene scene = new Scene(root, 1280, 680);//fenetre
+    public void start(final Stage stage) {
+        Group root = new Group();
+        final Scene scene = new Scene(root);//fenetre
         scene.setFill(Color.BLACK);
         stage.setScene(scene);
         stage.setTitle("Scrollbar");
-        //root.getChildren().addAll(vb, sc, vb2, txt, bt, sc2, sc3);
+     	FriendsList friendlist=new FriendsList(stage);
+	Friend friend=new Friend(friendlist.stack());
+	Friend f=new Friend(friendlist.stack());
+	friendlist.addFriend(friend);
+	friendlist.addFriend(f);
+	root.getChildren().addAll(friendlist.stack(), friendlist.scroll());
+
+	/* root.getChildren().addAll(vb, sc, vb2, sc2, sc3);
  
         shadow.setColor(Color.GREY);
         shadow.setOffsetX(2);
         shadow.setOffsetY(2);
  
-        vb.setLayoutX(5);
+        vb.setTranslateX(5);
         vb.setSpacing(10);//espace vide
 
-	vb2.setLayoutX(500);
+	vb2.setTranslateX(700);
 	vb2.setSpacing(5);
 
-	txt.setLayoutX(540);
+
+	txt.setLayoutX(740);
 	txt.setPrefHeight(30);
 	txt.setPrefWidth(300);
 
 	bt.setDefaultButton(true);//bouton avec valide avec la touche entree
-	bt.setLayoutX(640);
-	bt.setLayoutY(50);
+	bt.setLayoutX(740);
+	bt.setLayoutY(90);
 	bt.setEffect(new Reflection());
 
-        sc.setLayoutX(0/*scene.getWidth()-sc.getWidth()*/);//position de la barre
+        sc.setLayoutX(0);
         sc.setMin(20);
         sc.setOrientation(Orientation.VERTICAL);
-        sc.setPrefHeight(720);//barre
+        sc.setPrefHeight(720);//
         sc.setMax(1740);//contenu
  
-	sc2.setLayoutX(600);
+	sc2.setLayoutX(500);
 	sc2.setMin(20);
 	sc2.setOrientation(Orientation.VERTICAL);
 	sc2.setPrefHeight(720);
@@ -76,6 +88,8 @@ public class JavaFXClient extends Application {
 	sc3.setPrefHeight(720);
 	sc3.setMax(1740);
 
+	vb2.getChildren().add(txt);
+	vb2.getChildren().add(bt);
         for (int i = 0; i < 5; i++) {
             final Image image = images[i] =
                 new Image(getClass().getResourceAsStream(
@@ -93,10 +107,17 @@ public class JavaFXClient extends Application {
                     vb.setLayoutY(-new_val.doubleValue());
             }
         });
- 
         stage.show();
+	stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		public void handle(WindowEvent we) {
+		    System.out.println("Stage is closing");
+		    stage.close();
+		}
+	    });        
+	*/
+	stage.show();
     }
- 
+    
     public static void main(String[] args) {
         launch(args);
     }
