@@ -37,85 +37,27 @@ public class JavaFXClient extends Application {
     @Override
     public void start(final Stage stage) {
         Group root = new Group();
-        final Scene scene = new Scene(root);//fenetre
+        final Scene scene = new Scene(root,640,480);//fenetre
         scene.setFill(Color.BLACK);
         stage.setScene(scene);
         stage.setTitle("Scrollbar");
-     	FriendsList friendlist=new FriendsList(stage);
+     	FriendsList friendlist=new FriendsList(stage, root);
 	Friend friend=new Friend(friendlist.stack());
 	Friend f=new Friend(friendlist.stack());
 	friendlist.addFriend(friend);
 	friendlist.addFriend(f);
-	root.getChildren().addAll(friendlist.stack(), friendlist.scroll());
+	Timeline t = new Timeline(friendlist);
+	root.getChildren().addAll(friendlist.stack(), friendlist.scroll(),t.field());
 
-	/* root.getChildren().addAll(vb, sc, vb2, sc2, sc3);
- 
-        shadow.setColor(Color.GREY);
-        shadow.setOffsetX(2);
-        shadow.setOffsetY(2);
- 
-        vb.setTranslateX(5);
-        vb.setSpacing(10);//espace vide
-
-	vb2.setTranslateX(700);
-	vb2.setSpacing(5);
-
-
-	txt.setLayoutX(740);
-	txt.setPrefHeight(30);
-	txt.setPrefWidth(300);
-
-	bt.setDefaultButton(true);//bouton avec valide avec la touche entree
-	bt.setLayoutX(740);
-	bt.setLayoutY(90);
-	bt.setEffect(new Reflection());
-
-        sc.setLayoutX(0);
-        sc.setMin(20);
-        sc.setOrientation(Orientation.VERTICAL);
-        sc.setPrefHeight(720);//
-        sc.setMax(1740);//contenu
- 
-	sc2.setLayoutX(500);
-	sc2.setMin(20);
-	sc2.setOrientation(Orientation.VERTICAL);
-	sc2.setPrefHeight(720);
-	sc2.setMax(1740);
-
-	sc3.setLayoutX(900);
-	sc3.setMin(20);
-	sc3.setOrientation(Orientation.VERTICAL);
-	sc3.setPrefHeight(720);
-	sc3.setMax(1740);
-
-	vb2.getChildren().add(txt);
-	vb2.getChildren().add(bt);
-        for (int i = 0; i < 5; i++) {
-            final Image image = images[i] =
-                new Image(getClass().getResourceAsStream(
-                    "fw" +(i+1)+ ".jpg")
-                );
-            final ImageView pic = pics[i] =
-                new ImageView(images[i]);
-            pic.setEffect(shadow);
-            vb.getChildren().add(pics[i]);
-        }
- 
-        sc.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                Number old_val, Number new_val) {
-                    vb.setLayoutY(-new_val.doubleValue());
-            }
-        });
-        stage.show();
 	stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 		public void handle(WindowEvent we) {
 		    System.out.println("Stage is closing");
 		    stage.close();
 		}
 	    });        
-	*/
+    
 	stage.show();
+	
     }
     
     public static void main(String[] args) {
